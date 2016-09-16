@@ -1,0 +1,42 @@
+Index: gui/FactGui.h
+===================================================================
+--- gui/FactGui.h       (revision 18583)
++++ gui/FactGui.h       (working copy)
+@@ -2921,7 +2921,7 @@
+         out << tm.GetAsStr("%H:%M:%S.%f").substr(0,12);
+         out << "]</font>   <B>" << info.getName() << "</B> - ";
+ 
+-        bool iserr = 2;
++        uint8_t iserr = 2;
+         if (!conv)
+         {
+             out << "Compilation of format string '" << fmt << "' failed!";
+
+
+Index: gui/MainWindow.cc
+===================================================================
+--- gui/MainWindow.cc   (revision 18583)
++++ gui/MainWindow.cc   (working copy)
+@@ -115,7 +115,7 @@
+ 
+ void MainWindow::on_fNoutof4Val_valueChanged(int val)
+ {
+-    const uint32_t v[2] = { -1, val };
++    const uint32_t v[2] = { uint32_t(-1), uint32_t(val) };
+ 
+     if (!fInHandler)
+         Dim::SendCommand("FTM_CONTROL/SET_N_OUT_OF_4", v);
+
+Index: src/ratecontrol.cc
+===================================================================
+--- src/ratecontrol.cc	(revision 18583)
++++ src/ratecontrol.cc	(working copy)
+@@ -363,7 +363,7 @@
+             Out() << step << " (" << diff << ")" << endl;
+         }
+ 
+-        const uint32_t val[2] = { -1,  diff };
++        const uint32_t val[2] = { uint32_t(-1),  diff };
+         Dim::SendCommandNB("FTM_CONTROL/SET_THRESHOLD", val);
+ 
+         fThresholdMin = diff;
