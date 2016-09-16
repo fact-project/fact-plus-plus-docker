@@ -15,12 +15,9 @@ RUN useradd -m fact
 
 WORKDIR /home/fact
 
-RUN svn checkout -r 18583 https://trac.fact-project.org/svn/trunk/FACT++ --trust-server-cert --non-interactive
-
-ADD fix_uints.patch /home/fact/fix_uints.patch
+RUN svn checkout -r 18597 -q https://trac.fact-project.org/svn/trunk/FACT++ --trust-server-cert --non-interactive
 
 RUN cd FACT++ \
-	&& patch -p0 -i /home/fact/fix_uints.patch \
 	&& autoreconf --force --install -I .macro_dir \
 	&& ./configure --with-boost-libdir=/usr/lib/x86_64-linux-gnu \
 	&& make -j$CORES \
